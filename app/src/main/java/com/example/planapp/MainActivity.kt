@@ -35,32 +35,43 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.planapp.ui.theme.MainGreen
 import com.example.planapp.ui.theme.PlanAppTheme
+import com.example.planapp.view.student.LoginScreen
+import com.example.planapp.view.student.SignInScreen
 import kotlinx.coroutines.delay
 
 
 class MainActivity : ComponentActivity() {
+    lateinit var navController : NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             PlanAppTheme {
                 // A surface container using the 'background' color from the theme
-                SplashScreen()
+                navController = rememberNavController()
+                SetupNavGraph(navController = navController)
             }
         }
     }
 }
 
 @Composable
-fun SplashScreen(){
+fun SplashScreen(navController: NavController){
     val rotation = remember { Animatable(0f) }
 
     LaunchedEffect(Unit) {
         rotation.animateTo(
             targetValue = 1100f,
             animationSpec = tween(durationMillis = 10000, easing = LinearEasing)
-        ) // Rotate for additional 2.5 seconds for a total of 10 seconds
+        )
+        delay(1000)
+        navController.popBackStack()
+        navController.navigate(Screen.SignIn.route)
+
     }
 
             Column(
@@ -97,6 +108,8 @@ fun SplashScreen(){
 @Composable
 fun GreetingPreview() {
     PlanAppTheme {
-        SplashScreen()
+        SplashScreen(
+            navController = rememberNavController()
+        )
     }
 }
