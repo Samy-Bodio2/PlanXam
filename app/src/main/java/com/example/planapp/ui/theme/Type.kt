@@ -15,6 +15,10 @@ val InikaBoldFontFamily = FontFamily(
         Font(R.font.inika_bold, FontWeight.Normal)
 )
 
+val InikaRegularFontFamily = FontFamily(
+        Font(R.font.inika_regular, FontWeight.Normal)
+)
+
 
 val Typography = Typography(
 
@@ -28,13 +32,13 @@ val Typography = Typography(
             fontWeight = FontWeight.Normal,
             fontSize = 16.sp,
             color = Color(0xFFD8D8D8)
-    )/*
+    ),
     labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
+        fontFamily = InikaRegularFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp
     )
-    */
+
 )

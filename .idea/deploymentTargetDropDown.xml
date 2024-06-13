@@ -5,22 +5,6 @@
       <entry key="app">
         <State />
       </entry>
-      <entry key="prev3iac">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\PAMSTORE\.android\avd\Pixel_7_Pro_API_30.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-06-13T12:49:11.036891800Z" />
-        </State>
-      </entry>
       <entry key="prevIcia">
         <State>
           <runningDeviceTargetSelectedWithDropDown>
@@ -51,6 +35,22 @@
             </Target>
           </runningDeviceTargetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2024-06-13T13:17:26.879219900Z" />
+        </State>
+      </entry>
+      <entry key="prevNotification">
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\PAMSTORE\.android\avd\Small_Phone_API_30.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-06-13T17:41:19.335419100Z" />
         </State>
       </entry>
       <entry key="prevPisti">
