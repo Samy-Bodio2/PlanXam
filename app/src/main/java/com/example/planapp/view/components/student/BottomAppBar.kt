@@ -39,10 +39,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.planapp.R
+import com.example.planapp.ui.theme.FillWhite
 import com.example.planapp.ui.theme.MainGreen
 import com.example.planapp.view.student.LoginScreen
 import com.exyte.animatednavbar.AnimatedNavigationBar
 import com.exyte.animatednavbar.animation.balltrajectory.Parabolic
+import com.exyte.animatednavbar.animation.balltrajectory.Straight
 import com.exyte.animatednavbar.animation.indendshape.shapeCornerRadius
 import com.exyte.animatednavbar.utils.noRippleClickable
 
@@ -89,12 +91,43 @@ fun BottomAppBar(){
     val navigationBarItems = remember { NavigationBarItems.values() }
     var selectedIndex by remember { mutableStateOf(0) }
     AnimatedNavigationBar(
-        modifier = Modifier.height(64.dp),
+        modifier = Modifier.height(64.dp).background(Color.White),
         selectedIndex = selectedIndex,
         cornerRadius = shapeCornerRadius(cornerRadius = 34.dp),
         ballAnimation =  Parabolic(tween(300)),
         barColor = MainGreen,
         ballColor = MainGreen
+    )
+    {
+        navigationBarItems.forEach {
+                item ->
+            Box(
+                modifier = Modifier.fillMaxSize().noRippleClickable { selectedIndex = item.ordinal },
+                contentAlignment = Alignment.Center
+            ){
+                Icon(
+                    modifier = Modifier.size(26.dp),
+                    imageVector = item.icon,
+                    contentDescription = "Bottom Bar Icon",
+                    tint = if(selectedIndex == item.ordinal) Color.White
+                    else Color.Black
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun ForumBottomAppBar(color: Color){
+    val navigationBarItems = remember { NavigationBarItems.values() }
+    var selectedIndex by remember { mutableStateOf(0) }
+    AnimatedNavigationBar(
+        modifier = Modifier.height(64.dp).background(Color.White),
+        selectedIndex = selectedIndex,
+        cornerRadius = shapeCornerRadius(bottomLeft = 34.dp, bottomRight = 34.dp, topLeft = 0.dp, topRight = 0.dp),
+        ballAnimation =  Straight(tween(300)),
+        barColor = color,
+        ballColor = color
     )
     {
         navigationBarItems.forEach {
@@ -135,5 +168,5 @@ fun Modifier.noRippleClickable(onClick: () -> Unit) : Modifier = composed(){
 @Preview(showBackground = true)
 @Composable
 fun PrevBottomAppBar(){
-    BottomAppBarP()
+    BottomAppBar()
 }

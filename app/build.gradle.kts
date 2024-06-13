@@ -47,10 +47,11 @@ android {
 }
 
 dependencies {
-    implementation ("androidx.compose.material:material-icons-extended:1.6.7")
-    implementation("com.exyte:animated-navigation-bar:1.0.0")
-    implementation("io.coil-kt:coil-compose:2.1.0")
-    implementation ("io.coil-kt:coil-svg:2.0.0")
+    implementation (libs.androidx.material.icons.extended)
+    implementation (libs.androidx.datastore.preferences)
+    implementation(libs.animated.navigation.bar)
+    implementation(libs.coil.compose)
+    implementation (libs.coil.svg)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
