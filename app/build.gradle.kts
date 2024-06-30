@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    kotlin("plugin.serialization") version "2.0.0"
 }
 
 android {
@@ -47,6 +48,14 @@ android {
 }
 
 dependencies {
+    implementation(platform("io.github.jan-tennert.supabase:bom:2.5.1"))
+    implementation("io.github.jan-tennert.supabase:postgrest-kt")
+    implementation("io.ktor:ktor-client-android:2.3.12")
+    implementation(libs.kotlinx.serialization.json)
+    implementation (libs.google.accompanist.systemuicontroller)
+    implementation (libs.calendar)
+    implementation (libs.sheets.compose.dialogs.color)
+    implementation (libs.sheets.compose.dialogs.clock)
     implementation (libs.androidx.material.icons.extended)
     implementation (libs.androidx.datastore.preferences)
     implementation(libs.animated.navigation.bar)

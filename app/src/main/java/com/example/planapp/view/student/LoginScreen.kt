@@ -185,7 +185,7 @@ fun LoginScreen(navController: NavController){
                     }
                 },text = "Create an account !",color = MainGreen, fontFamily = FontFamily.SansSerif)
             }
-            Button(onClick = { /*TODO*/ },colors = ButtonDefaults.buttonColors(
+            Button(onClick = { navController.navigate(Screen.Home.route) },colors = ButtonDefaults.buttonColors(
                 containerColor = MainGreen
             ),modifier = Modifier
                 .width(350.dp)

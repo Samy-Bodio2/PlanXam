@@ -1,4 +1,4 @@
-package com.example.planapp.view.supervisor
+package com.example.planapp.view.administrator
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -41,6 +41,7 @@ import com.example.planapp.ui.theme.Istdi_Yellow
 import com.example.planapp.ui.theme.MainGreen
 import com.example.planapp.ui.theme.Typography
 import com.example.planapp.view.components.TopAppBAr
+import com.example.planapp.view.components.administrator.BottomAppBarA
 import com.example.planapp.view.components.student.BottomAppBar
 import com.example.planapp.view.components.supervisor.BottomAppBarT
 import com.example.planapp.view.student.forums.messageSectionIstdi
@@ -58,7 +59,7 @@ fun ViewReportScreen(){
         bottomBar = {
             Column {
                 messageSection()
-                BottomAppBarT()
+                BottomAppBarA()
             }
         }
     )

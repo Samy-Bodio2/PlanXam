@@ -1,9 +1,9 @@
-package com.example.planapp.view.supervisor
+package com.example.planapp.view.administrator
 
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,24 +12,22 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.paddingFrom
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -41,8 +39,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -52,7 +48,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -64,16 +59,39 @@ import com.example.planapp.ui.theme.FillWhite
 import com.example.planapp.ui.theme.MainGreen
 import com.example.planapp.ui.theme.Typography
 import com.example.planapp.ui.theme.White
+import com.example.planapp.view.components.administrator.BottomAppBarA
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RegisterTeacherScreen(){
+    Scaffold(
+        content = {
+            ContentRegister()
+        },
+        bottomBar = {
+            BottomAppBarA()
+        }
+    )
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController){
-    var username by remember {
+fun ContentRegister(){
+    var username by rememberSaveable {
+        mutableStateOf("")
+    }
+    var identifier by rememberSaveable {
         mutableStateOf("")
     }
     var password by rememberSaveable {
+        mutableStateOf("")
+    }
+    var phone by rememberSaveable {
+        mutableStateOf("")
+    }
+    var email by rememberSaveable {
         mutableStateOf("")
     }
     var passwordVisibility by remember { mutableStateOf(false) }
@@ -86,7 +104,7 @@ fun LoginScreen(navController: NavController){
         .fillMaxSize()
         .background(color = White),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(70.dp, Alignment.CenterVertically))
+        verticalArrangement = Arrangement.spacedBy(40.dp, Alignment.CenterVertically))
     {
         Column(
             Modifier
@@ -109,7 +127,7 @@ fun LoginScreen(navController: NavController){
             }
 
             Text(
-                text = "PlanXam Login",
+                text = "PlanXam Register",
                 style = TextStyle(
                     fontSize = 27.sp,
                     fontFamily = FontFamily(Font(R.font.inika_bold)),
@@ -119,7 +137,7 @@ fun LoginScreen(navController: NavController){
             )
         }
         Column (horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(35.dp, Alignment.CenterVertically))
+            verticalArrangement = Arrangement.spacedBy(25.dp, Alignment.CenterVertically))
         {
             OutlinedTextField(
                 placeholder = {
@@ -136,6 +154,27 @@ fun LoginScreen(navController: NavController){
                     unfocusedBorderColor = MainGreen),
                 leadingIcon = {
                     Icon(painter = painterResource(id = R.drawable.write_ic), contentDescription = "", tint = MainGreen, modifier = Modifier
+                        .size(28.dp)
+                        .offset(x = 10.dp))
+                    Spacer(modifier = Modifier.size(90.dp))
+                }
+            )
+
+            OutlinedTextField(
+                placeholder = {
+                    Text("Enter your school ID",style = Typography.titleLarge)
+                },
+                shape = RoundedCornerShape(29.dp),
+                modifier = Modifier
+                    .width(350.dp)
+                    .height(58.dp)
+                    .shadow(4.dp, shape = shape)
+                    .background(color = FillWhite), textStyle = Typography.bodyLarge, value = identifier, onValueChange = { newText -> identifier = newText },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = MainGreen,
+                    unfocusedBorderColor = MainGreen),
+                leadingIcon = {
+                    Icon(painter = painterResource(id = R.drawable.cni), contentDescription = "", tint = MainGreen, modifier = Modifier
                         .size(28.dp)
                         .offset(x = 10.dp))
                     Spacer(modifier = Modifier.size(90.dp))
@@ -168,31 +207,76 @@ fun LoginScreen(navController: NavController){
                 visualTransformation = if(passwordVisibility) VisualTransformation.None
                 else PasswordVisualTransformation()
             )
+            OutlinedTextField(
+                placeholder = {
+                    Text("Enter your email",style = Typography.titleLarge)
+                },
+                shape = RoundedCornerShape(29.dp),
+                modifier = Modifier
+                    .width(350.dp)
+                    .height(58.dp)
+                    .shadow(4.dp, shape = shape,)
+                    .background(color = FillWhite), textStyle = Typography.bodyLarge, value = email, onValueChange = { newText -> email = newText },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = MainGreen,
+                    unfocusedBorderColor = MainGreen),
+                leadingIcon = {
+                    IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
+                        Icon(painter = painterResource(id = R.drawable.message), contentDescription = "", tint = MainGreen, modifier = Modifier
+                            .size(28.dp)
+                            .offset(x = 10.dp))
+                    }
+                    Spacer(modifier = Modifier.size(90.dp))
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password
+                ),
+                visualTransformation = if(passwordVisibility) VisualTransformation.None
+                else PasswordVisualTransformation()
+            )
+            OutlinedTextField(
+                placeholder = {
+                    Text("Enter your phone number",style = Typography.titleLarge)
+                },
+                shape = RoundedCornerShape(29.dp),
+                modifier = Modifier
+                    .width(350.dp)
+                    .height(58.dp)
+                    .shadow(4.dp, shape = shape,)
+                    .background(color = FillWhite), textStyle = Typography.bodyLarge, value = password, onValueChange = { newText -> password = newText },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = MainGreen,
+                    unfocusedBorderColor = MainGreen),
+                leadingIcon = {
+                    IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
+                        Icon(painter = painterResource(id = R.drawable.phone_fill), contentDescription = "", tint = MainGreen, modifier = Modifier
+                            .size(28.dp)
+                            .offset(x = 10.dp))
+                    }
+                    Spacer(modifier = Modifier.size(90.dp))
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password
+                ),
+                visualTransformation = if(passwordVisibility) VisualTransformation.None
+                else PasswordVisualTransformation()
+            )
 
-
-        }
-        Column (verticalArrangement = Arrangement.spacedBy(68.dp, Alignment.CenterVertically)){
-            Row (modifier = Modifier
-                .width(350.dp)
-                .height(58.dp)
-                .offset(y = -40.dp), horizontalArrangement = Arrangement.End){
-                Spacer(modifier = Modifier.width(120.dp))
-            }
             Button(onClick = { /*TODO*/ },colors = ButtonDefaults.buttonColors(
                 containerColor = MainGreen
             ),modifier = Modifier
                 .width(350.dp)
+                .absolutePadding(top = 10.dp)
                 .height(58.dp)) {
-                Text(text = "Login", style = Typography.bodyLarge, fontSize = 25.sp)
+                Text(text = "Sign Up", style = Typography.bodyLarge, fontSize = 25.sp)
             }
         }
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
-fun prevLogin(){
-    LoginScreen(
-        navController = rememberNavController()
-    )
+fun prevSignIn(){
+    RegisterTeacherScreen()
 }

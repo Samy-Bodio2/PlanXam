@@ -1,4 +1,4 @@
-package com.example.planapp.view.components.supervisor
+package com.example.planapp.view.components.administrator
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.core.tween
@@ -8,13 +8,10 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.StickyNote2
@@ -40,8 +37,9 @@ import com.exyte.animatednavbar.animation.indendshape.shapeCornerRadius
 import com.exyte.animatednavbar.utils.noRippleClickable
 
 
+
 @Composable
-fun BottomAppBarT(){
+fun BottomAppBarA(){
     val navigationBarItems = remember { NavigationBarItems.values() }
     var selectedIndex by remember { mutableStateOf(0) }
     AnimatedNavigationBar(
@@ -75,48 +73,14 @@ fun BottomAppBarT(){
     }
 }
 
-@Composable
-fun ForumBottomAppBar(color: Color){
-    val navigationBarItems = remember { NavigationBarItems.values() }
-    var selectedIndex by remember { mutableStateOf(0) }
-    AnimatedNavigationBar(
-        modifier = Modifier
-            .height(64.dp)
-            .background(Color.White),
-        selectedIndex = selectedIndex,
-        cornerRadius = shapeCornerRadius(bottomLeft = 34.dp, bottomRight = 34.dp, topLeft = 0.dp, topRight = 0.dp),
-        ballAnimation =  Straight(tween(300)),
-        barColor = color,
-        ballColor = color
-    )
-    {
-        navigationBarItems.forEach {
-                item ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .noRippleClickable { selectedIndex = item.ordinal },
-                contentAlignment = Alignment.Center
-            ){
-                Icon(
-                    modifier = Modifier.size(26.dp),
-                    imageVector = item.icon,
-                    contentDescription = "Bottom Bar Icon",
-                    tint = if(selectedIndex == item.ordinal) Color.White
-                    else Color.Black
-                )
-            }
-        }
-    }
-}
 
 enum class NavigationBarItems(val icon: ImageVector)
 {
     Home(icon = Icons.Default.Home),
-    Notification(icon = Icons.Default.Notifications),
+    Exam(icon = Icons.Default.School),
+    Person(icon = Icons.Default.PersonAdd),
     Forum(icon = Icons.Default.EditNote),
-    Note(icon = Icons.Default.StickyNote2),
-    User(icon = Icons.Default.Person)
+    Note(icon = Icons.Default.StickyNote2)
 
 }
 
@@ -132,5 +96,5 @@ fun Modifier.noRippleClickable(onClick: () -> Unit) : Modifier = composed(){
 @Preview(showBackground = true)
 @Composable
 fun PrevBottomAppBar(){
-    BottomAppBarT()
+    BottomAppBarA()
 }

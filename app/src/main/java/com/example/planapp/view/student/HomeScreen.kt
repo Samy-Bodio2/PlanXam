@@ -29,6 +29,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.planapp.R
 import com.example.planapp.model.staticData.SchoolRepo
 import com.example.planapp.ui.theme.FillWhite
@@ -36,19 +38,23 @@ import com.example.planapp.ui.theme.MainGreen
 import com.example.planapp.ui.theme.Typography
 import com.example.planapp.view.components.TopAppBAr
 import com.example.planapp.view.components.student.BottomAppBar
+import com.example.planapp.view.components.student.TopAppBarStudent
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(){
-    Scaffold (Modifier.padding(12.dp).background(Color.White),
+fun HomeScreen(navController: NavController){
+    Scaffold (
+        Modifier
+            .padding(12.dp)
+            .background(Color.White),
         topBar = {
-            TopAppBAr()
+            TopAppBarStudent(navController = navController)
         },
         content = {
             Body()
         },
         bottomBar = {
-            BottomAppBar()
+            BottomAppBar(navController,0)
         }
     )
 }
@@ -81,7 +87,9 @@ fun CustomItem(school: SchoolRepo.School){
 fun Body(){
     val schoolRepo = SchoolRepo()
     val data = schoolRepo.getAllData()
-    LazyColumn(modifier = Modifier.fillMaxSize().background(Color.White), horizontalAlignment = Alignment.CenterHorizontally, contentPadding = PaddingValues(vertical = 100.dp))
+    LazyColumn(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.White), horizontalAlignment = Alignment.CenterHorizontally, contentPadding = PaddingValues(vertical = 100.dp))
     {
         items(items = data){school ->
             CustomItem(school = school)
@@ -93,5 +101,5 @@ fun Body(){
 fun PrevCustomItem(){
 //    val school = SchoolRepo.School(painterResource(id = R.drawable.icia),"ICIA","Institut de Commerce et d’Ingénierie d’Affaire")
 //    CustomItem(school = school)
-    HomeScreen()
+    HomeScreen(rememberNavController())
 }

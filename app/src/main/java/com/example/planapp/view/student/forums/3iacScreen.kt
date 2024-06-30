@@ -53,6 +53,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.planapp.R
 import com.example.planapp.ui.theme.FillWhite
 import com.example.planapp.ui.theme.MainGreen
@@ -66,7 +68,7 @@ import com.example.planapp.view.components.student.ForumBottomAppBar
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Screen3iac(){
+fun Screen3iac(navController: NavController){
     Scaffold(
         Modifier
             .padding(12.dp)
@@ -80,7 +82,7 @@ fun Screen3iac(){
         bottomBar = {
             Column {
                 messageSection()
-                ForumBottomAppBar(l3iac_Red)
+                ForumBottomAppBar(l3iac_Red,navController,2)
             }
 
         }
@@ -178,7 +180,9 @@ fun Body3iac(){
             .width(300.dp)
             .height(300.dp))
     }
-    Column (modifier = Modifier.verticalScroll(rememberScrollState()).padding(paddingValues = PaddingValues(vertical = 150.dp)),
+    Column (modifier = Modifier
+        .verticalScroll(rememberScrollState())
+        .padding(paddingValues = PaddingValues(vertical = 150.dp)),
         verticalArrangement = Arrangement.spacedBy(22.dp,Alignment.CenterVertically)){
         LeftMessage()
         RightMessage()
@@ -288,5 +292,5 @@ fun RightMessage(){
 @Composable
 @Preview(showBackground = true)
 fun prev3iac(){
-    Screen3iac()
+    Screen3iac(rememberNavController())
 }

@@ -45,6 +45,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.planapp.R
 import com.example.planapp.ui.theme.FillWhite
 import com.example.planapp.ui.theme.Icia_Red
@@ -60,7 +62,7 @@ import com.example.planapp.view.components.student.ForumBottomAppBar
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ScreenIstdi(){
+fun ScreenIstdi(navController: NavController){
     Scaffold(
         Modifier
             .padding(12.dp)
@@ -74,7 +76,7 @@ fun ScreenIstdi(){
         bottomBar = {
             Column {
                 messageSectionIstdi()
-                ForumBottomAppBar(Istdi_Green)
+                ForumBottomAppBar(Istdi_Green,navController,2)
             }
 
         }
@@ -166,7 +168,9 @@ fun BodyIstdi(){
             .width(300.dp)
             .height(300.dp))
     }
-    Column (modifier = Modifier.verticalScroll(rememberScrollState()).padding(paddingValues = PaddingValues(vertical = 150.dp)),
+    Column (modifier = Modifier
+        .verticalScroll(rememberScrollState())
+        .padding(paddingValues = PaddingValues(vertical = 150.dp)),
         verticalArrangement = Arrangement.spacedBy(22.dp,Alignment.CenterVertically)){
         LeftMessageIstdi()
         RightMessageIstdi()
@@ -276,5 +280,5 @@ fun RightMessageIstdi(){
 @Composable
 @Preview(showBackground = true)
 fun prevIsdti(){
-    ScreenIstdi()
+    ScreenIstdi(rememberNavController())
 }

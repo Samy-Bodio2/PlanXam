@@ -45,6 +45,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.planapp.R
 import com.example.planapp.ui.theme.FillWhite
 import com.example.planapp.ui.theme.Pisti_Red
@@ -60,7 +62,7 @@ import com.example.planapp.view.components.student.ForumBottomAppBar
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ScreenPisti(){
+fun ScreenPisti(navController: NavController){
     Scaffold(
         Modifier
             .padding(12.dp)
@@ -74,7 +76,7 @@ fun ScreenPisti(){
         bottomBar = {
             Column {
                 messageSectionPisti()
-                ForumBottomAppBar(Pisti_Red)
+                ForumBottomAppBar(Pisti_Red,navController,2)
             }
 
         }
@@ -190,7 +192,9 @@ fun BodyPisti(){
             .width(300.dp)
             .height(300.dp))
     }
-    Column (modifier = Modifier.verticalScroll(rememberScrollState()).padding(paddingValues = PaddingValues(vertical = 150.dp)),
+    Column (modifier = Modifier
+        .verticalScroll(rememberScrollState())
+        .padding(paddingValues = PaddingValues(vertical = 150.dp)),
         verticalArrangement = Arrangement.spacedBy(22.dp,Alignment.CenterVertically)){
         LeftMessagePisti()
         RightMessagePisti()
@@ -300,5 +304,5 @@ fun RightMessagePisti(){
 @Composable
 @Preview(showBackground = true)
 fun prevPisti(){
-    ScreenPisti()
+    ScreenPisti(rememberNavController())
 }

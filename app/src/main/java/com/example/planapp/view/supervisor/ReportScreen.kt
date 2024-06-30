@@ -42,31 +42,23 @@ import com.example.planapp.ui.theme.MainGreen
 import com.example.planapp.ui.theme.Typography
 import com.example.planapp.view.components.TopAppBAr
 import com.example.planapp.view.components.student.BottomAppBar
+import com.example.planapp.view.components.supervisor.BottomAppBarT
+import com.example.planapp.view.student.InfoSect
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ReportScreen(){
     Scaffold(modifier = Modifier.padding(paddingValues = PaddingValues(12.dp)),
-        topBar = { ReportBar() },
+        topBar = {
+            Column {
+                TopAppBAr()
+                InfoSect(value = "Write a report to the administration")
+            } },
         content = {
             BodyReportScreen()
         },
-        bottomBar = { BottomAppBar()}
+        bottomBar = { BottomAppBarT()}
     )
-}
-
-@Composable
-fun ReportBar(){
-    Column(modifier = Modifier.fillMaxSize()){
-        TopAppBAr()
-        Row (modifier = Modifier
-            .fillMaxWidth()
-            .height(60.dp)
-            .background(FillWhite),
-            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center){
-            Text("Write a report to the administration",style = Typography.titleLarge,color = MainGreen);
-        }
-    }
 }
 
 
@@ -75,7 +67,9 @@ fun BodyReportScreen(){
     var textReport by remember {
         mutableStateOf("")
     }
-    Column(modifier = Modifier.fillMaxSize().padding(bottom = 30.dp),verticalArrangement = Arrangement.spacedBy(17.dp)){
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(bottom = 30.dp),verticalArrangement = Arrangement.spacedBy(17.dp)){
         Button(onClick = { /*TODO*/ },modifier = Modifier
             .fillMaxWidth()
             .padding(top = 170.dp)

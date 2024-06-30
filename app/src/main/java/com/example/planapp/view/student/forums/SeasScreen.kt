@@ -45,6 +45,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.planapp.R
 import com.example.planapp.ui.theme.FillWhite
 import com.example.planapp.ui.theme.Seas_Orange
@@ -59,7 +61,7 @@ import com.example.planapp.view.components.student.ForumBottomAppBar
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ScreenSeas(){
+fun ScreenSeas(navController: NavController){
     Scaffold(
         Modifier
             .padding(12.dp)
@@ -73,7 +75,7 @@ fun ScreenSeas(){
         bottomBar = {
             Column {
                 messageSectionSeas()
-                ForumBottomAppBar(Seas_Orange)
+                ForumBottomAppBar(Seas_Orange,navController,2)
             }
 
         }
@@ -183,7 +185,9 @@ fun BodySeas(){
             .width(300.dp)
             .height(300.dp))
     }
-    Column (modifier = Modifier.verticalScroll(rememberScrollState()).padding(paddingValues = PaddingValues(vertical = 150.dp)),
+    Column (modifier = Modifier
+        .verticalScroll(rememberScrollState())
+        .padding(paddingValues = PaddingValues(vertical = 150.dp)),
         verticalArrangement = Arrangement.spacedBy(22.dp,Alignment.CenterVertically)){
         LeftMessageSeas()
         RightMessageSeas()
@@ -293,5 +297,5 @@ fun RightMessageSeas(){
 @Composable
 @Preview(showBackground = true)
 fun prevSeas(){
-    ScreenSeas()
+    ScreenSeas(rememberNavController())
 }

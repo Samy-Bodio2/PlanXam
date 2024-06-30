@@ -1,14 +1,13 @@
 package com.example.planapp
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -17,16 +16,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -40,9 +45,22 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.planapp.ui.theme.MainGreen
 import com.example.planapp.ui.theme.PlanAppTheme
-import com.example.planapp.view.student.LoginScreen
-import com.example.planapp.view.student.SignInScreen
+import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.postgrest.from
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import kotlinx.datetime.DatePeriod
+import kotlinx.serialization.Serializable
+import kotlin.reflect.jvm.internal.impl.metadata.ProtoBuf
+
+val supabase = createSupabaseClient(
+    supabaseUrl = "https://qdkspaqdhypmcdjwikuj.supabase.co",
+    supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFka3NwYXFkaHlwbWNkandpa3VqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTcyMTE2NDAsImV4cCI6MjAzMjc4NzY0MH0.4SjSQ5TB907ryXfIgBspnBFxZLA_OQgrcsKDSY1sDhc"
+) {
+    install(Postgrest)
+}
 
 
 class MainActivity : ComponentActivity() {
@@ -54,10 +72,13 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 navController = rememberNavController()
                 SetupNavGraph(navController = navController)
+//                    ClassroomsList()
             }
         }
     }
 }
+
+
 
 @Composable
 fun SplashScreen(navController: NavController){
@@ -111,5 +132,33 @@ fun GreetingPreview() {
         SplashScreen(
             navController = rememberNavController()
         )
+    }
+}
+
+@Serializable
+data class ClassRoom(
+    val id: Int,
+    val created_at: String,
+    val name: String,
+    val capacity: Int
+)
+
+@Composable
+fun ClassroomsList() {
+    var classrooms by remember {
+        mutableStateOf<List<ClassRoom>>(listOf())
+    }
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            classrooms = supabase.from("ClassRoom")
+                .select().decodeList<ClassRoom>()
+        }
+    }
+    LazyColumn {
+        items(classrooms,key = { classRoom -> classRoom.id }){
+            Log.d(it.name," The classroom name")
+            Log.d(it.created_at," The classroom created_at")
+            Log.d(it.capacity.toString()," The classroom capacity")
+        }
     }
 }

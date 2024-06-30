@@ -47,6 +47,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.planapp.R
 import com.example.planapp.Screen
 import com.example.planapp.ui.theme.FillWhite
@@ -54,19 +56,23 @@ import com.example.planapp.ui.theme.MainGreen
 import com.example.planapp.ui.theme.Typography
 import com.example.planapp.view.components.TopAppBAr
 import com.example.planapp.view.components.student.BottomAppBar
+import com.example.planapp.view.components.student.TopAppBarStudent
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ProfileScreen(){
-    Scaffold(Modifier.padding(12.dp).background(Color.White),
+fun ProfileScreen(navController: NavController){
+    Scaffold(
+        Modifier
+            .padding(12.dp)
+            .background(Color.White),
         topBar = {
-            TopAppBAr()
+            TopAppBarStudent(navController = navController)
         },
         content = {
             ProfileBody()
         },
         bottomBar = {
-            BottomAppBar()
+            BottomAppBar(navController,3)
         }
     )
 }
@@ -74,7 +80,10 @@ fun ProfileScreen(){
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileBody(){
-    Column (modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(paddingValues = PaddingValues(vertical = 100.dp)),
+    Column (modifier = Modifier
+        .fillMaxSize()
+        .verticalScroll(rememberScrollState())
+        .padding(paddingValues = PaddingValues(vertical = 100.dp)),
         verticalArrangement = Arrangement.spacedBy(22.dp,Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally)
     {
@@ -112,8 +121,8 @@ fun ProfileBody(){
             modifier = Modifier
                 .width(350.dp)
                 .height(58.dp)
-                .background(color = FillWhite,shape = RoundedCornerShape(29.dp))
-                .border(0.5.dp, MainGreen,shape = RoundedCornerShape(29.dp)), contentAlignment = Alignment.Center)
+                .background(color = FillWhite, shape = RoundedCornerShape(29.dp))
+                .border(0.5.dp, MainGreen, shape = RoundedCornerShape(29.dp)), contentAlignment = Alignment.Center)
         {
             Text(text = "IUC21E97757585",style = Typography.titleLarge, modifier = Modifier.padding(horizontal = 80.dp))
         }
@@ -121,8 +130,8 @@ fun ProfileBody(){
             modifier = Modifier
                 .width(350.dp)
                 .height(58.dp)
-                .background(color = FillWhite,shape = RoundedCornerShape(29.dp))
-                .border(0.5.dp, MainGreen,shape = RoundedCornerShape(29.dp)), contentAlignment = Alignment.Center)
+                .background(color = FillWhite, shape = RoundedCornerShape(29.dp))
+                .border(0.5.dp, MainGreen, shape = RoundedCornerShape(29.dp)), contentAlignment = Alignment.Center)
         {
             Text(text = "Samy Bodio Ongla",style = Typography.titleLarge, modifier = Modifier.padding(horizontal = 80.dp))
         }
@@ -130,8 +139,8 @@ fun ProfileBody(){
             modifier = Modifier
                 .width(350.dp)
                 .height(58.dp)
-                .background(color = FillWhite,shape = RoundedCornerShape(29.dp))
-                .border(0.5.dp, MainGreen,shape = RoundedCornerShape(29.dp)), contentAlignment = Alignment.Center)
+                .background(color = FillWhite, shape = RoundedCornerShape(29.dp))
+                .border(0.5.dp, MainGreen, shape = RoundedCornerShape(29.dp)), contentAlignment = Alignment.Center)
         {
             Text(text = "Password@37Samy",style = Typography.titleLarge, modifier = Modifier.padding(horizontal = 80.dp))
         }
@@ -139,8 +148,8 @@ fun ProfileBody(){
             modifier = Modifier
                 .width(350.dp)
                 .height(58.dp)
-                .background(color = FillWhite,shape = RoundedCornerShape(29.dp))
-                .border(0.5.dp, MainGreen,shape = RoundedCornerShape(29.dp)), contentAlignment = Alignment.Center)
+                .background(color = FillWhite, shape = RoundedCornerShape(29.dp))
+                .border(0.5.dp, MainGreen, shape = RoundedCornerShape(29.dp)), contentAlignment = Alignment.Center)
         {
             Text(text = "samy.bodio21myiuc.com",style = Typography.titleLarge, modifier = Modifier.padding(horizontal = 80.dp))
         }
@@ -148,8 +157,8 @@ fun ProfileBody(){
             modifier = Modifier
                 .width(350.dp)
                 .height(58.dp)
-                .background(color = FillWhite,shape = RoundedCornerShape(29.dp))
-                .border(0.5.dp, MainGreen,shape = RoundedCornerShape(29.dp)), contentAlignment = Alignment.Center)
+                .background(color = FillWhite, shape = RoundedCornerShape(29.dp))
+                .border(0.5.dp, MainGreen, shape = RoundedCornerShape(29.dp)), contentAlignment = Alignment.Center)
         {
             Text(text = "3IAC",style = Typography.titleLarge, modifier = Modifier.padding(horizontal = 80.dp))
         }
@@ -157,8 +166,8 @@ fun ProfileBody(){
             modifier = Modifier
                 .width(350.dp)
                 .height(58.dp)
-                .background(color = FillWhite,shape = RoundedCornerShape(29.dp))
-                .border(0.5.dp, MainGreen,shape = RoundedCornerShape(29.dp)), contentAlignment = Alignment.CenterStart)
+                .background(color = FillWhite, shape = RoundedCornerShape(29.dp))
+                .border(0.5.dp, MainGreen, shape = RoundedCornerShape(29.dp)), contentAlignment = Alignment.CenterStart)
         {
             Text(text = "licence pro Genie Logicielle",style = Typography.titleLarge, modifier = Modifier.padding(horizontal = 80.dp))
         }
@@ -168,5 +177,5 @@ fun ProfileBody(){
 @Preview(showBackground = true)
 @Composable
 fun PrevProfileScreen(){
-    ProfileScreen()
+    ProfileScreen(rememberNavController())
 }

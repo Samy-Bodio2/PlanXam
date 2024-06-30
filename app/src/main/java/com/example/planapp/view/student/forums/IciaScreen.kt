@@ -45,6 +45,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.planapp.R
 import com.example.planapp.ui.theme.FillWhite
 import com.example.planapp.ui.theme.Icia_Red
@@ -58,7 +60,7 @@ import com.example.planapp.view.components.student.ForumBottomAppBar
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ScreenIcia(){
+fun ScreenIcia(navController: NavController){
     Scaffold(
         Modifier
             .padding(12.dp)
@@ -72,7 +74,7 @@ fun ScreenIcia(){
         bottomBar = {
             Column {
                 messageSectionIcia()
-                ForumBottomAppBar(Icia_Red)
+                ForumBottomAppBar(Icia_Red,navController,2)
             }
 
         }
@@ -170,7 +172,9 @@ fun BodyIcia(){
             .width(300.dp)
             .height(300.dp))
     }
-    Column (modifier = Modifier.verticalScroll(rememberScrollState()).padding(paddingValues = PaddingValues(vertical = 150.dp)),
+    Column (modifier = Modifier
+        .verticalScroll(rememberScrollState())
+        .padding(paddingValues = PaddingValues(vertical = 150.dp)),
         verticalArrangement = Arrangement.spacedBy(22.dp,Alignment.CenterVertically)){
         LeftMessageIcia()
         RightMessageIcia()
@@ -280,5 +284,5 @@ fun RightMessageIcia(){
 @Composable
 @Preview(showBackground = true)
 fun prevIcia(){
-    ScreenIcia()
+    ScreenIcia(rememberNavController())
 }

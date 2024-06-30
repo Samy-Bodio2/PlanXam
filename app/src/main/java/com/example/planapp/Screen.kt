@@ -10,4 +10,5 @@ sealed class Screen(
     object Home : Screen(route = "Home_Screen")
     object Notification : Screen(route = "Notification_Screen")
     object Profile : Screen(route = "Profile_Screen")
+    object Forum : Screen(route = "Forum_Screen")
 }
