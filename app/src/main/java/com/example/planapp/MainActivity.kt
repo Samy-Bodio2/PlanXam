@@ -1,9 +1,7 @@
 package com.example.planapp
 
-import android.annotation.SuppressLint
-import android.content.Context
+
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.core.Animatable
@@ -22,16 +20,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -51,9 +46,7 @@ import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.DatePeriod
 import kotlinx.serialization.Serializable
-import kotlin.reflect.jvm.internal.impl.metadata.ProtoBuf
 
 val supabase = createSupabaseClient(
     supabaseUrl = "https://qdkspaqdhypmcdjwikuj.supabase.co",
@@ -61,7 +54,6 @@ val supabase = createSupabaseClient(
 ) {
     install(Postgrest)
 }
-
 
 class MainActivity : ComponentActivity() {
     lateinit var navController : NavHostController
@@ -72,7 +64,8 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 navController = rememberNavController()
                 SetupNavGraph(navController = navController)
-//                    ClassroomsList()
+
+
             }
         }
     }
@@ -86,8 +79,8 @@ fun SplashScreen(navController: NavController){
 
     LaunchedEffect(Unit) {
         rotation.animateTo(
-            targetValue = 1100f,
-            animationSpec = tween(durationMillis = 10000, easing = LinearEasing)
+            targetValue = 550f,
+            animationSpec = tween(durationMillis = 5000, easing = LinearEasing)
         )
         delay(1000)
         navController.popBackStack()
@@ -95,34 +88,34 @@ fun SplashScreen(navController: NavController){
 
     }
 
-            Column(
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(33.dp, Alignment.CenterVertically),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Box(modifier = Modifier
+            .graphicsLayer(rotationZ = rotation.value)
+            .height(150.dp)
+            .width(150.dp)
+        ){
+            Image(
+                painter = painterResource(id = R.drawable.logo),
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(33.dp, Alignment.CenterVertically),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Box(modifier = Modifier
-                    .graphicsLayer(rotationZ = rotation.value)
-                    .height(150.dp)
-                    .width(150.dp)
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.logo),
-                        modifier = Modifier.fillMaxSize(),
-                        contentDescription = "PlanXam Logo",
-                        contentScale = ContentScale.FillBounds
-                    )
-                }
+                contentDescription = "PlanXam Logo",
+                contentScale = ContentScale.FillBounds
+            )
+        }
 
-                Text(
-                    text = "PlanXam",
-                    style = TextStyle(
-                        fontSize = 30.sp,
-                        fontFamily = FontFamily(Font(R.font.inika_bold)),
-                        fontWeight = FontWeight(700),
-                        color = MainGreen,
-                    )
-                )
-            }
+        Text(
+            text = "PlanXam",
+            style = TextStyle(
+                fontSize = 30.sp,
+                fontFamily = FontFamily(Font(R.font.inika_bold)),
+                fontWeight = FontWeight(700),
+                color = MainGreen,
+            )
+        )
+    }
 }
 
 @Preview(showBackground = true)
@@ -154,11 +147,24 @@ fun ClassroomsList() {
                 .select().decodeList<ClassRoom>()
         }
     }
+    when (classrooms.isEmpty()) {
+        true -> {
+            LoadingAnimation()
+        }
+        false -> {
+            extracted(classrooms)
+        }
+    }
+
+}
+
+@Composable
+private fun extracted(classrooms: List<ClassRoom>) {
     LazyColumn {
-        items(classrooms,key = { classRoom -> classRoom.id }){
-            Log.d(it.name," The classroom name")
-            Log.d(it.created_at," The classroom created_at")
-            Log.d(it.capacity.toString()," The classroom capacity")
+        items(classrooms, key = { classRoom -> classRoom.id }) {
+            Text(text = it.name)
+            Text(text = it.name)
+            Text(text = it.name)
         }
     }
 }

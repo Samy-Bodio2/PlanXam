@@ -1,8 +1,10 @@
 package com.example.planapp.view.student
 
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,22 +12,32 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,7 +47,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -184,9 +198,10 @@ fun SignInScreen(navController: NavController){
                 else PasswordVisualTransformation()
             )
 
+            Demo_ExposedDropdownMenuBox()
 
         }
-        Column (verticalArrangement = Arrangement.spacedBy(68.dp, Alignment.CenterVertically)){
+        Column (verticalArrangement = Arrangement.spacedBy(60.dp, Alignment.CenterVertically)){
             Row (modifier = Modifier.offset(y = -20.dp)){
                 Spacer(modifier = Modifier.width(120.dp))
                 Text(modifier = Modifier.clickable {
@@ -202,6 +217,64 @@ fun SignInScreen(navController: NavController){
             }
         }
    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Demo_ExposedDropdownMenuBox() {
+    val context = LocalContext.current
+    val coffeeDrinks = arrayOf("Americano", "Cappuccino", "Espresso", "Latte", "Mocha")
+    var expanded by remember { mutableStateOf(false) }
+    var selectedText by remember { mutableStateOf(coffeeDrinks[0]) }
+
+    Box(
+        modifier = Modifier
+            .border(1.dp, MainGreen, RoundedCornerShape(29.dp))
+            .width(350.dp)
+            .height(58.dp)
+    ) {
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = {
+                expanded = !expanded
+            }
+        ) {
+            TextField(
+                value = selectedText,
+                onValueChange = {},
+                colors = TextFieldDefaults.colors(unfocusedContainerColor = FillWhite, focusedContainerColor = FillWhite),
+                leadingIcon = { Icon(imageVector = Icons.Default.School, contentDescription = "",
+                    tint = MainGreen,modifier = Modifier
+                        .size(28.dp)
+                        .offset(x = 10.dp))
+                    Spacer(modifier = Modifier.size(90.dp)) },
+                readOnly = true,
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                modifier = Modifier
+                    .menuAnchor()
+                    .width(350.dp)
+                    .height(58.dp)
+                    .shadow(4.dp, shape = shape)
+                    .background(color = Color.White, shape = RoundedCornerShape(29.dp)), textStyle = Typography.titleLarge
+            )
+
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                coffeeDrinks.forEach { item ->
+                    DropdownMenuItem(
+                        text = { Text(text = item) },
+                        onClick = {
+                            selectedText = item
+                            expanded = false
+                            Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
+                        }
+                    )
+                }
+            }
+        }
+    }
 }
 
 @Preview(showBackground = true)
